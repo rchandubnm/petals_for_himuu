@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Himu 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #e8637a;
+    --deep-rose: #c0435a;
+    --blush: #f5c6ce;
+    --petal: #fde8ec;
+    --gold: #d4a96a;
+    --cream: #fdf6f0;
+    --dark: #2a1a1f;
+    --soft: #7a4a55;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--dark);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 20px; height: 20px;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    font-size: 18px;
+  }
+
+  .petal-container {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .falling-petal {
+    position: absolute;
+    top: -60px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    animation: fall linear infinite;
+    user-select: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-60px) rotate(0deg) translateX(0); opacity: 0.8; }
+    50% { transform: translateY(50vh) rotate(180deg) translateX(30px); opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0; }
+  }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(160deg, #fff0f3 0%, #ffe4ea 40%, #ffd6e0 100%);
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,99,122,0.12), transparent 70%);
+    animation: pulse-bg 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-bg {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  .hero-tag {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--rose);
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 12vw, 9rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 0.9;
+    animation: fadeUp 1s ease both;
+    animation-delay: 0.5s;
+    opacity: 0;
+    position: relative;
+  }
+
+  .hero-title span {
+    color: var(--rose);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-title span::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    border-radius: 2px;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.4; transform: scaleX(0.8); }
+    50% { opacity: 1; transform: scaleX(1); }
+  }
+
+  .hero-flowers {
+    font-size: clamp(2rem, 6vw, 4rem);
+    animation: fadeUp 1s ease both, floaty 3s ease-in-out infinite;
+    animation-delay: 0.8s, 1.5s;
+    opacity: 0;
+    margin: 1rem 0;
+    letter-spacing: 0.3em;
+  }
+
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-style: italic;
+    color: var(--soft);
+    max-width: 500px;
+    line-height: 1.7;
+    animation: fadeUp 1s ease both;
+    animation-delay: 1s;
+    opacity: 0;
+    margin: 1rem 0 2.5rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--rose);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    animation: fadeUp 1s ease both, bounce-down 2s ease-in-out 2s infinite;
+    animation-delay: 2s, 2s;
+    opacity: 0;
+    font-family: 'Dancing Script', cursive;
+  }
+
+  @keyframes bounce-down {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #gallery {
+    padding: 6rem 2rem;
+    position: relative;
+    background: linear-gradient(180deg, #ffd6e0 0%, #fff0f3 100%);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    color: var(--rose);
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    color: var(--rose);
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blush));
+  }
+
+  .photo-grid {
+    columns: 3;
+    column-gap: 1.2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) { .photo-grid { columns: 2; } }
+  @media (max-width: 480px) { .photo-grid { columns: 1; } }
+
+  .photo-item {
+    break-inside: avoid;
+    margin-bottom: 1.2rem;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(192,67,90,0.15);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease;
+  }
+
+  .photo-item:hover {
+    transform: scale(1.03) rotate(-0.5deg);
+    box-shadow: 0 16px 50px rgba(192,67,90,0.25);
+    z-index: 2;
+  }
+
+  .photo-item img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .photo-item .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(192,67,90,0.5), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+
+  .photo-item:hover .photo-overlay { opacity: 1; }
+
+  .photo-overlay span {
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blush), var(--petal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    min-height: 200px;
+  }
+
+  #reasons {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #reasons::before {
+    content: '💕';
+    position: absolute;
+    font-size: 20rem;
+    opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reason-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(232,99,122,0.1);
+    border: 1px solid rgba(232,99,122,0.1);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .reason-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blush), var(--rose), var(--blush));
+  }
+
+  .reason-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(232,99,122,0.2);
+  }
+
+  .reason-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+
+  .reason-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .reason-text {
+    font-size: 0.95rem;
+    color: var(--soft);
+    line-height: 1.7;
+  }
+
+  #cta {
+    padding: 7rem 2rem;
+    text-align: center;
+    background: linear-gradient(160deg, #fff0f3 0%, #ffd6e0 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .big-heart {
+    font-size: clamp(5rem, 20vw, 12rem);
+    line-height: 1;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    display: block;
+    margin: 0 auto 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.12); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.08); }
+    70% { transform: scale(1); }
+  }
+
+  .cta-question {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-style: italic;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-sub {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--soft);
+    font-style: italic;
+    margin-bottom: 3rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+    color: white;
+    box-shadow: 0 8px 30px rgba(192,67,90,0.4);
+    min-width: 160px;
+  }
+
+  .btn-yes::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-yes:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 16px 40px rgba(192,67,90,0.5);
+  }
+
+  .btn-yes:hover::before { opacity: 1; }
+
+  .btn-no {
+    background: white;
+    color: var(--soft);
+    border: 2px solid var(--blush);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-no:hover {
+    font-size: 0.7rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(42,26,31,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: white;
+    border-radius: 28px;
+    padding: 3rem 2rem;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+    transform: scale(0.85) translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-sub {
+    color: var(--soft);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    text-decoration: none;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .modal-btn:hover { transform: scale(1.04); }
+
+  .modal-btn-whatsapp {
+    background: #25D366;
+    color: white;
+    box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+  }
+
+  .modal-btn-instagram {
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+    box-shadow: 0 6px 20px rgba(220,39,67,0.35);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--soft);
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .modal-close:hover { opacity: 1; transform: rotate(90deg); }
+
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+    animation: confetti-fall 2s ease forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+  }
+
+  footer span { color: var(--rose); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .deco-flower {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: floaty 4s ease-in-out infinite;
+  }
+
+  @media (max-width: 500px) {
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .btn { width: 100%; max-width: 280px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor">🌸</div>
+<div class="petal-container" id="petalContainer"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="hero-bg-circle" style="width:300px;height:300px;top:20%;left:10%;background:radial-gradient(circle,rgba(232,99,122,0.08),transparent 70%)"></div>
+  <div class="hero-bg-circle" style="width:250px;height:250px;bottom:15%;right:8%;background:radial-gradient(circle,rgba(212,169,106,0.1),transparent 70%)"></div>
+  <p class="hero-tag">✨ A little something, just for you ✨</p>
+  <h1 class="hero-title">Hey, <span>Himu</span></h1>
+  <div class="hero-flowers">🌸 🌺 🌷 🌹 🌸</div>
+  <p class="hero-subtitle">I made this little corner of the internet just for you — because you deserve something as beautiful as you are.</p>
+  <div class="scroll-hint">
+    <span>scroll down</span>
+    <span>↓</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header reveal">
+    <span class="section-label">📸 Captured moments</span>
+    <h2 class="section-title">Some of my favourite<br><em>glimpses of you</em></h2>
+    <div class="section-divider">🌸 🌺 🌸</div>
+  </div>
+
+  <div class="photo-grid reveal">
+
+    <div class="photo-item">
+      <img src="Images/Adventure_3_Portrait.JPG" alt="Adventure" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌸</div>'">
+      <div class="photo-overlay"><span>Adventure ✨</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Adventure_Landscape_2.jpg" alt="Adventure" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🏔️</div>'">
+      <div class="photo-overlay"><span>Wild & free 🏔️</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Adventure_Portrait_1.jpg" alt="Adventure" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌿</div>'">
+      <div class="photo-overlay"><span>The explorer 🌿</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Aqua_1_Nice.jpg" alt="Aqua" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🐠</div>'">
+      <div class="photo-overlay"><span>Aqua magic 🐠</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Aqua_2_Nice.jpg" alt="Aqua" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌊</div>'">
+      <div class="photo-overlay"><span>Ocean soul 🌊</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Aqua_3.jpg" alt="Aqua" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>💧</div>'">
+      <div class="photo-overlay"><span>So serene 💧</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Aqua_fish.jpg" alt="Aqua fish" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🐟</div>'">
+      <div class="photo-overlay"><span>Under the sea 🐟</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Chai.jpg" alt="Chai" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>☕</div>'">
+      <div class="photo-overlay"><span>Chai time ☕</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_1.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🥺</div>'">
+      <div class="photo-overlay"><span>So cute 🥺</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_2.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌷</div>'">
+      <div class="photo-overlay"><span>Pure magic 🌷</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_3.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>💕</div>'">
+      <div class="photo-overlay"><span>Too adorable 💕</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_4.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌺</div>'">
+      <div class="photo-overlay"><span>Effortlessly her 🌺</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_5_Landscape.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌸</div>'">
+      <div class="photo-overlay"><span>Sunshine 🌸</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_6_Landscape.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>✨</div>'">
+      <div class="photo-overlay"><span>Glowing ✨</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_7.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌹</div>'">
+      <div class="photo-overlay"><span>Just wow 🌹</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_8.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>💖</div>'">
+      <div class="photo-overlay"><span>Heart eyes 💖</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Cute_9.jpg" alt="Cute" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🫶</div>'">
+      <div class="photo-overlay"><span>My person 🫶</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/I_Landscape.jpg" alt="Landscape" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌄</div>'">
+      <div class="photo-overlay"><span>A whole view 🌄</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Ice Cream.jpg" alt="Ice Cream" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🍦</div>'">
+      <div class="photo-overlay"><span>Ice cream date 🍦</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/IMG_0084.JPG" alt="Candid" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>📸</div>'">
+      <div class="photo-overlay"><span>Candid & perfect 📸</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/IMG_2145.jpg" alt="Candid" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌷</div>'">
+      <div class="photo-overlay"><span>So her 🌷</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/IMG_3186.jpg" alt="Candid" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌸</div>'">
+      <div class="photo-overlay"><span>Radiant 🌸</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Love_Landscape.jpg" alt="Love" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>💖</div>'">
+      <div class="photo-overlay"><span>Love 💖</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Me_Landscape.jpg" alt="Me" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌺</div>'">
+      <div class="photo-overlay"><span>Just her 🌺</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Park_1.jpg" alt="Park" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌿</div>'">
+      <div class="photo-overlay"><span>Park day 🌿</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Park_2.jpg" alt="Park" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🍃</div>'">
+      <div class="photo-overlay"><span>Green escape 🍃</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Park_3.jpg" alt="Park" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌼</div>'">
+      <div class="photo-overlay"><span>Nature girl 🌼</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Princess.jpg" alt="Princess" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>👑</div>'">
+      <div class="photo-overlay"><span>My princess 👑</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Romantic_1.jpg" alt="Romantic" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>💕</div>'">
+      <div class="photo-overlay"><span>My favourite 💕</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Romantic_2.jpg" alt="Romantic" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🌹</div>'">
+      <div class="photo-overlay"><span>Golden hour 🌹</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Romantic_3.jpg" alt="Romantic" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🥀</div>'">
+      <div class="photo-overlay"><span>Breathtaking 🥀</span></div>
+    </div>
+
+    <div class="photo-item">
+      <img src="Images/Temple.jpg" alt="Temple" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>🛕</div>'">
+      <div class="photo-overlay"><span>Temple vibes 🛕</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REASONS -->
+<section id="reasons">
+  <div class="section-header reveal">
+    <span class="section-label">💌 From the heart</span>
+    <h2 class="section-title">Why you make my<br><em>world bloom</em></h2>
+    <div class="section-divider">🌹 💕 🌹</div>
+  </div>
+  <div class="reasons-grid">
+    <div class="reason-card reveal">
+      <span class="reason-icon">😊</span>
+      <p class="reason-title">Your smile</p>
+      <p class="reason-text">It lights up every room, and somehow, every single thought of mine.</p>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-icon">🌟</span>
+      <p class="reason-title">Your spirit</p>
+      <p class="reason-text">The way you tackle life with such fire and gentleness at the same time — it's rare and beautiful.</p>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-icon">🫶</span>
+      <p class="reason-title">Your heart</p>
+      <p class="reason-text">The care you carry for everyone around you — it shows what a beautiful soul you are.</p>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-icon">✨</span>
+      <p class="reason-title">Your presence</p>
+      <p class="reason-text">Everything feels a little brighter, a little more magical when you're around.</p>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-icon">🌺</span>
+      <p class="reason-title">Just you</p>
+      <p class="reason-text">Every little thing about you, all of it, together — simply irreplaceable.</p>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-icon">💌</span>
+      <p class="reason-title">This feeling</p>
+      <p class="reason-text">The way I feel when I think about you — I wouldn't trade it for anything.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="deco-flower" style="top:10%;left:5%;animation-delay:0s">🌸</div>
+  <div class="deco-flower" style="top:20%;right:8%;animation-delay:1s;font-size:1.5rem">🌺</div>
+  <div class="deco-flower" style="bottom:15%;left:10%;animation-delay:2s">🌷</div>
+  <div class="deco-flower" style="bottom:10%;right:5%;animation-delay:0.5s;font-size:2.5rem">🌹</div>
+
+  <span class="big-heart">💕</span>
+  <h2 class="cta-question reveal">Will you go on a date with me,</h2>
+  <p class="cta-sub reveal"><em>Himu?</em> 🌸</p>
+  <div class="cta-buttons reveal">
+    <button class="btn btn-yes" onclick="handleYes()">🌹 Yes, absolutely!</button>
+    <button class="btn btn-no" id="noBtn" onmouseover="runaway(this)" ontouchstart="runaway(this)">Maybe not…</button>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <span class="modal-emoji">🥳</span>
+    <h3 class="modal-title">Yay! She said yes!</h3>
+    <p class="modal-sub">Let's plan something beautiful together. Reach out to me! 💌</p>
+    <div class="modal-actions">
+      <a class="modal-btn modal-btn-whatsapp" id="whatsappBtn" href="#" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp me 💬
+      </a>
+      <a class="modal-btn modal-btn-instagram" id="instaBtn" href="#" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Instagram DM 💌
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Made with <span>💕</span> just for <span>Himu</span> 🌸
+</footer>
+
+<script>
+  // ===== EDIT THESE TWO LINES =====
+  const WHATSAPP_NUMBER    = "919492660892";        
+  const INSTAGRAM_USERNAME = "chanduu._.10"; 
+  // =================================
+
+  document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=Hey%20Himu!%20%F0%9F%8C%B8%20You%20said%20YES%20and%20I%20still%20can't%20believe%20it...%20Let's%20go%20on%20that%20date%20%F0%9F%92%95%F0%9F%8C%B9`;
+  document.getElementById('instaBtn').href   = `https://instagram.com/${INSTAGRAM_USERNAME}`;
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursors = ['🌸','💕','🌺','✨','🌷','💖','🌹'];
+  let ci = 0;
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  setInterval(() => { ci = (ci + 1) % cursors.length; cursor.textContent = cursors[ci]; }, 800);
+
+  // Falling petals
+  const petals = ['🌸','🌺','🌷','🌹','💮','🏵️','💕','✨'];
+  const container = document.getElementById('petalContainer');
+  function spawnPetal() {
+    const el = document.createElement('div');
+    el.className = 'falling-petal';
+    el.textContent = petals[Math.floor(Math.random() * petals.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    el.style.animationDuration = (6 + Math.random() * 8) + 's';
+    el.style.animationDelay = (Math.random() * 4) + 's';
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 16000);
+  }
+  for (let i = 0; i < 18; i++) setTimeout(spawnPetal, i * 300);
+  setInterval(spawnPetal, 1500);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+
+  // No button runaway
+  function runaway(btn) {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const rect = btn.getBoundingClientRect();
+    let nx = (Math.random() - 0.5) * (vw * 0.6);
+    let ny = (Math.random() - 0.5) * (vh * 0.4);
+    if (rect.left   + nx < 20)      nx = 20 - rect.left;
+    if (rect.right  + nx > vw - 20) nx = vw - 20 - rect.right;
+    if (rect.top    + ny < 20)      ny = 20 - rect.top;
+    if (rect.bottom + ny > vh - 20) ny = vh - 20 - rect.bottom;
+    btn.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)';
+    btn.style.transform  = `translate(${nx}px, ${ny}px)`;
+  }
+
+  // Yes button
+  function handleYes() {
+    launchConfetti();
+    setTimeout(() => { document.getElementById('modal').classList.add('active'); }, 400);
+  }
+  function closeModal() { document.getElementById('modal').classList.remove('active'); }
+  document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+  // Confetti
+  const confettiColors = ['#e8637a','#f5c6ce','#d4a96a','#fde8ec','#c0435a','#fff','#ffd6e0'];
+  function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = (20 + Math.random() * 60) + 'vw';
+        c.style.top  = '40vh';
+        c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        c.style.width  = (6 + Math.random() * 10) + 'px';
+        c.style.height = (6 + Math.random() * 10) + 'px';
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+        c.style.animationDelay   = (Math.random() * 0.5) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+      }, i * 25);
+    }
+  }
+</script>
+</body>
+</html>
